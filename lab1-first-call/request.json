@@ -1,0 +1,8 @@
+{
+  "model": "qwen2.5:3b",
+  "temperature": 0,
+  "messages": [
+    {"role": "system", "content": "You are the on-call assistant of a DevOps team. Answer in at most three sentences."},
+    {"role": "user", "content": "A pod is in CrashLoopBackOff. What does that mean?"}
+  ]
+}

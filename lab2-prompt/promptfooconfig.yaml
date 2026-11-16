@@ -1,0 +1,45 @@
+# The assistant's eval: four saved questions, each with checks its answer must
+# pass. Run it from this directory:  npx -y promptfoo@0.125.1 eval
+description: On-call assistant, lab 2
+
+prompts:
+  - "{{question}}"
+
+providers:
+  - id: file://provider.py
+    label: on-call assistant
+
+defaultTest:
+  assert:
+    # At most three sentences: a long answer fails, whatever it says.
+    - type: javascript
+      value: output.length < 700
+
+tests:
+  - description: a crash loop gets a kubectl command
+    vars:
+      question: The payments-api pod is in CrashLoopBackOff. What do I run to see why?
+    assert:
+      - type: icontains-any
+        value: ["kubectl logs", "kubectl describe"]
+
+  - description: a pending pod gets a kubectl command
+    vars:
+      question: A new pod has been Pending for ten minutes. How do I find the reason?
+    assert:
+      - type: icontains
+        value: kubectl
+
+  - description: an off-topic question is refused
+    vars:
+      question: Write me a short poem about cats.
+    assert:
+      - type: icontains
+        value: I only help with on-call questions
+
+  - description: a second off-topic question is refused
+    vars:
+      question: What is the capital of France?
+    assert:
+      - type: icontains
+        value: I only help with on-call questions

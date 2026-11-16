@@ -1,0 +1,35 @@
+# Lab 2: the assistant's eval, run on every pull request that changes it.
+# The model runs inside the job, in an Ollama service container, so the
+# check needs no API key and costs nothing.
+name: Prompt check
+
+on:
+  pull_request:
+    paths:
+      - "lab2-prompt/**"
+      - "llm.py"
+      - ".github/workflows/prompt-check.yml"
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    services:
+      ollama:
+        image: ollama/ollama:0.40.16
+        ports:
+          - 11434:11434
+    env:
+      LLM_MODEL: qwen2.5:3b
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Download the model into the Ollama container
+        run: curl -sS --fail http://localhost:11434/api/pull -d "{\"model\": \"$LLM_MODEL\", \"stream\": false}"
+      - name: Run the eval
+        working-directory: lab2-prompt
+        run: npx -y promptfoo@0.125.1 eval --no-progress-bar

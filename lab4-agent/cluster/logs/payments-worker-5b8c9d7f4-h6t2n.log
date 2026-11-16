@@ -1,0 +1,5 @@
+2026-11-16T09:00:02Z INFO  starting payments-worker 2.14.0
+2026-11-16T09:00:02Z INFO  connecting to kafka-0.kafka:9092, topic payments.events
+2026-11-16T09:00:03Z INFO  loading currency table: 1,912,004 rows
+2026-11-16T09:00:09Z ERROR java.lang.OutOfMemoryError: Java heap space
+2026-11-16T09:00:09Z ERROR container exit code 137 (OOMKilled), memory limit 512Mi

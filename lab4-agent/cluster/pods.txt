@@ -1,0 +1,6 @@
+NAMESPACE   NAME                               READY   STATUS             RESTARTS        AGE
+payments    payments-api-7d9f6c8b5-k2x4p       1/1     Running            0               3d
+payments    payments-api-7d9f6c8b5-q8m1z       1/1     Running            0               3d
+payments    payments-worker-5b8c9d7f4-h6t2n    0/1     CrashLoopBackOff   14 (2m ago)     52m
+payments    payments-worker-5b8c9d7f4-w3r9v    1/1     Running            0               52m
+payments    ledger-client-6f7d8e9a1-p5s7d      1/1     Running            0               9d
